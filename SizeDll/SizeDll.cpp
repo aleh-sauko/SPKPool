@@ -50,21 +50,33 @@ __declspec(dllexport) DWORD Size(SPKPool *spkPool, std::vector<std::string> argu
 			task->taskName = "Size";
 			task->arguments = arg;
 
-			//spkPool->GetFreeThreadId;
-
 			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
 				spkPool->AddTask(task);
-				//FILE_SIZE += Size(spkPool, arg);
 			}
 			else
 			{
 				FILE_SIZE += fd.nFileSizeLow;
+				delete task;
 			}
 		} while(::FindNextFile(hFind, &fd));
 		::FindClose(hFind);
 		
-	} else spkPool->out << "\nError : Invalid dir " << arguments[0] << ".\n" << std::cout;
+	} 
+	else
+	{
+		temp = std::wstring(arguments[0].begin(), arguments[0].end());
+		root = temp.c_str();
+		hFind=::FindFirstFile(root, &fd);
+		if (hFind != INVALID_HANDLE_VALUE)
+		{
+			FILE_SIZE += fd.nFileSizeLow;
+		} 
+		else 
+		{
+			spkPool->out << "\nError : Invalid dir " << arguments[0] << ".\n" << std::cout;
+		}
+	}
 
 	spkPool->out << std::endl << "Size of " << arguments[0] << " " << FILE_SIZE << " bytes." << std::endl;
 

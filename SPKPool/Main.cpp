@@ -36,6 +36,13 @@ int main(void)
 		return 0;
 	}
 
+	HINSTANCE copyDll;
+	if((copyDll=LoadLibrary(L"../Debug/CopyDll"))==NULL)
+	{
+		std::cout << "Can`t load CopyDll.";
+		return 0;
+	}
+
 	ThreadProc list;
 	list=(ThreadProc)GetProcAddress(listDll, (LPCSTR)MAKEINTRESOURCE(1));
 	threadProcs["List"] = list;
@@ -43,6 +50,10 @@ int main(void)
 	MultipalThreadProc size;
 	size=(MultipalThreadProc)GetProcAddress(sizeDll, (LPCSTR)MAKEINTRESOURCE(1));
 	multipalThreadProcs["Size"] = size;
+
+	MultipalThreadProc copy;
+	copy=(MultipalThreadProc)GetProcAddress(copyDll, (LPCSTR)MAKEINTRESOURCE(1));
+	multipalThreadProcs["Copy"] = copy;
 
 	while (true)
 	{
@@ -68,6 +79,7 @@ int main(void)
 
 	FreeLibrary(listDll);
 	FreeLibrary(sizeDll);
+	FreeLibrary(copyDll);
 
 	std::cout << "SPKPool closed." << std::endl;
 	getchar(); getchar();
