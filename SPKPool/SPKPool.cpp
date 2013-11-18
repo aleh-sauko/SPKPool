@@ -7,7 +7,7 @@ SPKPool::SPKPool(int minCountOfThread, int maxCountOfThread, double timeLife)
 	this->maxCountOfThread = maxCountOfThread;
 	this->timeLife = timeLife;
 	startedCountOfThread = 0;
-	isSPKPoolExit = true;
+	isSPKPoolExit = false;
 
 	threads = new HANDLE[maxCountOfThread];
 	startThreadSemaphore = new HANDLE[maxCountOfThread];

@@ -26,5 +26,8 @@
     <ClInclude Include="SPKPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MapProc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -82,26 +82,3 @@ __declspec(dllexport) DWORD Size(SPKPool *spkPool, std::vector<std::string> argu
 
 	return FILE_SIZE;
 }
-
-void SPKPool::AddTask(Task *task)
-{
-	if (task->taskName == statusTask)
-	{
-		HINSTANCE statusDll;
-		if((statusDll=LoadLibrary(L"../Debug/StatusDll"))==NULL)
-		{
-			std::cout << "Can`t load StatusDll.";
-			return;
-		}
-
-		PoolProc status;
-		status=(PoolProc)GetProcAddress(statusDll, (LPCSTR)MAKEINTRESOURCE(1));
-		status(this);
-		FreeLibrary(statusDll);
-		return;
-	}
-
-	WaitForSingleObject(taskSemaphore, INFINITE);
-	tasks.push(task);
-	ReleaseSemaphore(taskSemaphore, 1, NULL);
-}

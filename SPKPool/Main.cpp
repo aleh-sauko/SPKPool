@@ -1,14 +1,17 @@
 #pragma once
 #include "SPKPool.h"
+#include "MapProc.h"
 
 #include "../ExitDll/ExitDll.h"
 #pragma comment(lib, "../Debug/ExitDll.lib")
 
-std::map <std::string, ThreadProc> threadProcs;
-std::map <std::string, MultipalThreadProc> multipalThreadProcs;
+extern std::map <std::string, ThreadProc> threadProcs;
+extern std::map <std::string, MultipalThreadProc> multipalThreadProcs;
 
 int main(void)
 {
+	setlocale(LC_ALL, "");
+
 	int minCountOfThread;
 	int maxCountOfThread;
 	int timeLife;

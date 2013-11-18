@@ -48,7 +48,6 @@ public:
 	std::ofstream out;
 
 private:
-	
 
 	static DWORD WINAPI ObserverThreadProc(LPVOID *spkPool);
 	static DWORD WINAPI ThreadManagerProc(LPVOID *spkPool);

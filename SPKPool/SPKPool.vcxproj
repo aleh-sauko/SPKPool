@@ -82,6 +82,7 @@
     <ClCompile Include="SPKPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MapProc.h" />
     <ClInclude Include="SPKPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
