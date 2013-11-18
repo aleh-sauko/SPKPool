@@ -64,25 +64,35 @@ __declspec(dllexport) DWORD Copy(SPKPool *spkPool, std::vector<std::string> argu
 			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
 				STATUS = CreateDirectory(destination, NULL);
+				EnterCriticalSection(&spkPool->outSection);
 				if (STATUS == 0)
 					spkPool->out << "(Create Dir) Error (" << GetLastError() <<") : " << to << std::endl;
 				else
 					spkPool->out << "(Create Dir) Success : " << to << std::endl;
+				LeaveCriticalSection(&spkPool->outSection);
 				spkPool->AddTask(task);
 			}
 			else
 			{
 				STATUS = CopyFile(path, destination, FALSE);
+				EnterCriticalSection(&spkPool->outSection);
 				if (STATUS == 0)
 					spkPool->out << "(Copy) Error (" << GetLastError() <<") : " << from << " to " << to << std::endl;
 				else
 					spkPool->out << "(Copy) Success : " << from << " to " << to << std::endl;
+				LeaveCriticalSection(&spkPool->outSection);
 				delete task;
 			}
 		} while(::FindNextFile(hFind, &fd));
 		::FindClose(hFind);
 		
-	} else spkPool->out << "\nError : Invalid dir " << arguments[0] << ".\n" << std::cout;
-
+	} 
+	else 
+	{	
+		EnterCriticalSection(&spkPool->outSection);
+		spkPool->out << "\nError : Invalid dir " << arguments[0] << ".\n" << std::cout;
+		LeaveCriticalSection(&spkPool->outSection);
+	}
+	
 	return STATUS;
 }

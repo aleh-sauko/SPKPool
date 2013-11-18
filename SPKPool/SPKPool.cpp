@@ -37,6 +37,7 @@ SPKPool::SPKPool(int minCountOfThread, int maxCountOfThread, double timeLife)
 	threadManager = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadManagerProc,
 		(LPVOID *)this, 0, NULL);
 
+	InitializeCriticalSection(&outSection);
 	out.open("d:\\result.txt");
 }
 
@@ -69,6 +70,7 @@ SPKPool::~SPKPool(void)
 	delete[] startThreadSemaphore;
 	delete[] workThreadSemaphore;
 
+	DeleteCriticalSection(&outSection);
 	out.close();
 }
 

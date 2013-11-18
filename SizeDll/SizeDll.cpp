@@ -26,7 +26,7 @@ __declspec(dllexport) DWORD Size(SPKPool *spkPool, std::vector<std::string> argu
 
 	if (arguments.size() != 1)
 	{
-		spkPool->out << "\nError: wrong count of parameters.\n";
+		std::cout << "\nError: wrong count of parameters.\n";
 		return FILE_SIZE;
 	}
 
@@ -74,11 +74,15 @@ __declspec(dllexport) DWORD Size(SPKPool *spkPool, std::vector<std::string> argu
 		} 
 		else 
 		{
+			EnterCriticalSection(&spkPool->outSection);
 			spkPool->out << "\nError : Invalid dir " << arguments[0] << ".\n" << std::cout;
+			LeaveCriticalSection(&spkPool->outSection);
 		}
 	}
 
+	EnterCriticalSection(&spkPool->outSection);
 	spkPool->out << std::endl << "Size of " << arguments[0] << " " << FILE_SIZE << " bytes." << std::endl;
+	LeaveCriticalSection(&spkPool->outSection);
 
 	return FILE_SIZE;
 }

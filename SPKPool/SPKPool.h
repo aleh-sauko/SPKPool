@@ -46,6 +46,7 @@ public:
 	bool isSPKPoolExit;
 
 	std::ofstream out;
+	CRITICAL_SECTION outSection;
 
 private:
 
