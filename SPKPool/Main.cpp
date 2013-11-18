@@ -10,7 +10,7 @@ extern std::map <std::string, MultipalThreadProc> multipalThreadProcs;
 
 int main(void)
 {
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "Russian");
 
 	int minCountOfThread;
 	int maxCountOfThread;
